@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/libs/flexible.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./fonts/iconfont.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="header">
+            <h3>买车询底价</h3>
+        </header>
+        <main class="main">
+            <div class="con">
+
+            </div>
+            <ul class="rightsidebar">
+                <!-- <li>A</li>
+                <li>B</li>
+                <li>C</li> -->
+            </ul>
+        </main>
+    </div>
+    <script src="./js/libs/bscroll.js"></script>
+    <script src="./js/libs/jquery-2.1.1.min.js"></script>
+    <script>
+        $.ajax({
+            url: 'data.json',
+            success: function(rs) {
+                render(rs);
+                console.log(rs)
+            }
+        });
+
+        function render(data) {
+            var keys = Object.keys(data);
+
+            //渲染右导航
+            var html = '';
+            $.each(keys, function(i, item) {
+                html += `<li>${item}</li>`;
+            });
+            $('.rightsidebar').append(html);
+            //渲染city
+            var lhtml = '';
+            for (var i in data) {
+                lhtml += `<h4 class="${i}">${i}</h4><ul class="cityList">`;
+                $.each(data[i], function(ind, val) {
+                    lhtml += `<li>
+                                <dl>
+                                    <dt>
+                                        <img src="" alt="">
+                                    </dt>
+                                    <dd>
+                                        <p>${val.name}</p>
+                                    </dd>
+                                </dl>
+                            </li>`;
+                });
+                lhtml += `</ul>`;
+            }
+            $('.con').append(lhtml);
+
+            var Bscroll = new BScroll('.main', {
+                click: true
+            });
+            $('.rightsidebar').on('click', 'li', function() {
+                var el = '.' + $(this).html();
+                Bscroll.scrollToElement(el, 100);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
