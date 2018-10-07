@@ -3,10 +3,10 @@ $(function() {
         url: '../data.json',
         dataType: 'json',
         success: function(rs) {
-            if (rs.code === 1) {
-                render(rs);
-                console.log(rs.data);
-            }
+            console.log(rs)
+                // if (rs.code === 1) {
+                //     console.log(rs)
+                // }
         }
     });
 
