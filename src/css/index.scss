@@ -39,7 +39,6 @@ body {
     overflow: hidden;
     .con {
         width: 100%;
-        height: 100%;
         h4 {
             width: 100%;
             background: #f2f2f2;
@@ -75,7 +74,7 @@ body {
         }
     }
     .rightsidebar {
-        width: px2rem(14px);
+        width: px2rem(30px);
         position: fixed;
         right: px2rem(10px);
         bottom: px2rem(30px);

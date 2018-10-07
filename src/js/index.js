@@ -3,10 +3,10 @@ $(function() {
         url: '../data.json',
         dataType: 'json',
         success: function(rs) {
-            console.log(rs)
-                // if (rs.code === 1) {
-                //     console.log(rs)
-                // }
+            if (rs.code === 1) {
+
+                render(rs.data);
+            }
         }
     });
 
@@ -14,33 +14,46 @@ $(function() {
         var obj = {};
         data.forEach(function(item) {
             var first = item.Spelling.substr(0, 1);
+            if (!obj[first]) {
+                obj[first] = {
+                    title: first,
+                    list: []
+                };
+            }
+            obj[first].list.push(item);
+
         });
-        //渲染右导航
-        var html = '';
-        $.each(keys, function(i, item) {
-            html += `<li>${item}</li>`;
+
+        var arr = [];
+        for (var i in obj) {
+            arr.push(obj[i]);
+        }
+        arr.sort(function(a, b) {
+            return a.title.charCodeAt(0) - b.title.charCodeAt(0);
         });
-        $('.rightsidebar').append(html);
         //渲染city
         var lhtml = '';
-        for (var i in data) {
-            lhtml += `<h4 class="${i}">${i}</h4><ul class="cityList">`;
-            $.each(data[i], function(ind, val) {
+        var html = '';
+        arr.forEach(function(item) {
+            lhtml += `<h4 class="${item.title}">${item.title}</h4><ul class="cityList">`;
+            item.list.forEach(function(val) {
                 lhtml += `<li>
-                            <dl>
-                                <dt>
-                                    <img src="" alt="">
-                                </dt>
-                                <dd>
-                                    <p>${val.name}</p>
-                                </dd>
-                            </dl>
-                        </li>`;
+                    <dl>
+                        <dt>
+                            <img src="" alt="">
+                        </dt>
+                        <dd>
+                            <p>${val.Name}</p>
+                        </dd>
+                    </dl>
+                </li>`;
             });
             lhtml += `</ul>`;
-        }
+            //渲染右导航
+            html += `<li>${item.title}</li>`;
+        });
         $('.con').append(lhtml);
-
+        $('.rightsidebar').append(html);
         var Bscroll = new BScroll('.main', {
             click: true
         });
@@ -49,5 +62,6 @@ $(function() {
             Bscroll.scrollToElement(el, 100);
         });
     }
+
 
 });
