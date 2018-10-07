@@ -40,7 +40,7 @@ $(function() {
                 lhtml += `<li>
                     <dl>
                         <dt>
-                            <img src="" alt="">
+                            <img src="${val.CoverPhoto}" alt="">
                         </dt>
                         <dd>
                             <p>${val.Name}</p>
